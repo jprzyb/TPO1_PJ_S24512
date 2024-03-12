@@ -28,11 +28,7 @@ public class Service {
     }
 
     public static Double getNBPRate() {
-        return NBPRate.getRateAsDouble(
-                NBPRate.getCurrencyCodeFromResponse(
-                        NBPRate.callNBP()
-                )
-        );
+        return NBPRate.twoTablesCall();
     }
 
     public static String getCountry(){

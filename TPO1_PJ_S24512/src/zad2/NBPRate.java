@@ -8,10 +8,11 @@ import java.net.URL;
 public class NBPRate {
 
     public static String URI = "http://api.nbp.pl/api/exchangerates/tables/{table}/";
+    public static String T_URI;
 
     public static String callNBP(){
         try{
-            URL url = new URL(setUri(URI,"a"));
+            URL url = new URL(T_URI);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
 
@@ -33,20 +34,16 @@ public class NBPRate {
         return "Something went wrong!";
     }
 
-    public static String setUri(String uri, String table){
-        String result = uri.replace("{table}", table);
+    public static void setUri(String uri, String table){
+        String  result = uri.replace("{table}", table);
         System.out.print(Service.debug ? "NBP URI: "+result+"\n" : "");
-        return result;
+        T_URI = result;
     }
 
     public static String getCurrencyCodeFromResponse(String response){
         String result = "N/A";
         String[] list = response.split(",");
         String currencyCode= CountryCurrency.getCurrency(CountryCurrency.getCurrencyFromCountry(Service.getCountry()));
-
-//        for(String l : list){
-//            System.out.println(l);
-//        }
 
         for(int i=0;i<list.length ;i++){
             if(list[i].contains(currencyCode)){
@@ -60,7 +57,29 @@ public class NBPRate {
     }
 
     public static Double getRateAsDouble(String rate){
+        if(rate.equals("N/A")) {
+            System.out.print(Service.debug ? "NBP Currency Rate not found:  "+rate+"\n" : "");
+            return -4.04;
+        }
         return Double.parseDouble(rate);
+    }
+
+    public static Double twoTablesCall(){
+        setUri(URI,"a");
+        Double result = NBPRate.getRateAsDouble(
+                NBPRate.getCurrencyCodeFromResponse(
+                        NBPRate.callNBP()
+                )
+        );
+        if(result == -4.04){
+            setUri(URI, "b");
+            result = NBPRate.getRateAsDouble(
+                    NBPRate.getCurrencyCodeFromResponse(
+                            NBPRate.callNBP()
+                    )
+            );
+        }
+        return result;
     }
 
 }

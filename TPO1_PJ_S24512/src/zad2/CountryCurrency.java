@@ -20,11 +20,9 @@ public class CountryCurrency {
         }
         return "Country not found";
     }
-
     public static String getCurrency(String line){
         String result = line.split(" ")[0].split("\t")[0].trim();
         System.out.print(Service.debug ? "Currency in " + line + ": " + result + "\n" : "");
         return result;
     }
-
 }

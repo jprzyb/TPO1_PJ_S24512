@@ -21,11 +21,18 @@ public class Service {
     }
 
     public static Double getRateFor(String currency) {
-        return ExchangeRate.getExchangeRateAsDouble(ExchangeRate.getExchangeRateFromResponse(ExchangeRate.callExcghangeRate(currency),currency));
+        return ExchangeRate.getExchangeRateAsDouble(
+                ExchangeRate.getExchangeRateFromResponse(
+                        ExchangeRate.callExcghangeRate(currency),currency)
+        );
     }
 
     public static Double getNBPRate() {
-        return 0.0;
+        return NBPRate.getRateAsDouble(
+                NBPRate.getCurrencyCodeFromResponse(
+                        NBPRate.callNBP()
+                )
+        );
     }
 
     public static String getCountry(){

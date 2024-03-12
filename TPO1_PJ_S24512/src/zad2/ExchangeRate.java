@@ -27,13 +27,7 @@ public class ExchangeRate {
             }
             reader.close();
             System.out.print(Service.debug ? "ExchangeRate Response: "+response+"\n" : "");
-            return response.toString();/*.
-                    replace(",", ",\n\t").
-                    replace("{","{\n").
-                    replace("}","\n}").
-                    replace(":{",":\n{").
-                    replace(":",":\n{")
-                    ;*/
+            return response.toString();
         }
         catch (Exception e){
             e.printStackTrace();

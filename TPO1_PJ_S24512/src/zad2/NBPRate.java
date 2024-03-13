@@ -9,7 +9,6 @@ public class NBPRate {
 
     public static String URI = "http://api.nbp.pl/api/exchangerates/tables/{table}/";
     public static String T_URI;
-
     public static String callNBP(){
         try{
             URL url = new URL(T_URI);
@@ -33,17 +32,28 @@ public class NBPRate {
 
         return "Something went wrong!";
     }
-
     public static void setUri(String uri, String table){
         String  result = uri.replace("{table}", table);
         System.out.print(Service.debug ? "NBP URI: "+result+"\n" : "");
         T_URI = result;
     }
-
     public static String getCurrencyCodeFromResponse(String response){
         String result = "N/A";
         String[] list = response.split(",");
-        String currencyCode= CountryCurrency.getCurrency(CountryCurrency.getCurrencyFromCountry(Service.getCountry()));
+        String currencyCode;
+
+        try{
+            currencyCode= CountryCurrency.getCurrency(CountryCurrency.getCurrencyFromCountry(
+                    MainFrame.country.getText()
+            ));
+        }
+        catch (Exception e){
+            currencyCode = CountryCurrency.getCurrency(CountryCurrency.getCurrencyFromCountry(
+                    Service.getCountry()
+            ));
+        }
+
+
 
         for(int i=0;i<list.length ;i++){
             if(list[i].contains(currencyCode)){
@@ -55,7 +65,6 @@ public class NBPRate {
 
         return result;
     }
-
     public static Double getRateAsDouble(String rate){
         if(rate.equals("N/A")) {
             System.out.print(Service.debug ? "NBP Currency Rate not found:  "+rate+"\n" : "");
@@ -63,7 +72,6 @@ public class NBPRate {
         }
         return Double.parseDouble(rate);
     }
-
     public static Double twoTablesCall(){
         setUri(URI,"a");
         Double result = NBPRate.getRateAsDouble(

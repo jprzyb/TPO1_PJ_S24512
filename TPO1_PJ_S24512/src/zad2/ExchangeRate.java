@@ -44,13 +44,16 @@ public class ExchangeRate {
     public static String getExchangeRateFromResponse(String response, String currency) {
 
         String[] s = response.split(",");
-        String result="";
+        String result="1";
 
         for(String e : s){
             if(e.contains(currency)){
                 result = e.replace("\"quotes\":{\"", "").replace("}","").replace(currency,"").replace("\"","").
                 replace(":","").replace(CountryCurrency.getCurrency(CountryCurrency.getCurrencyFromCountry(Service.getCountry())), "");
             }
+        }
+        if (result.equals("source")){
+            result = "1.0";
         }
         System.out.print(Service.debug ? "ExchangeRate result: "+result+"\n" : "");
 

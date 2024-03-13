@@ -9,7 +9,7 @@ package zad2;
 
 public class Service {
 
-    public static Boolean debug = false;
+    public static Boolean debug = true;
     public static String country;
 
     public Service(String country) {

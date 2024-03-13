@@ -28,7 +28,7 @@ public class WebFrame extends JFrame {
         WebView webView = new WebView();
         WebEngine webEngine = webView.getEngine();
 
-        webEngine.load("https://pl.wikipedia.org/wiki/"+ MainFrame.city.getText());
+        webEngine.load("https://pl.wikipedia.org/wiki/"+ MainFrame.city.getText().trim());
 
         // Ustawienie sceny
         Scene scene = new Scene(webView);

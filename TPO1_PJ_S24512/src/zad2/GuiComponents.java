@@ -9,7 +9,8 @@ public class GuiComponents {
     public static int w=495;
     public static int h=495;
     public static JTextField getCountryTextField(){
-        JTextField field = new JTextField("Georgia");
+        JTextField field = new JTextField("Poland");
+        field.setToolTipText("Country");
 
         field.setSize(150,30);
         field.setPreferredSize(new Dimension(150,30));
@@ -19,7 +20,9 @@ public class GuiComponents {
             public void actionPerformed(ActionEvent e) {
                 new InfoFrame(
                         NBPRate.twoTablesCall().toString()
-                         ,"NBP PLN exchange for "+MainFrame.city.getText()
+                         ,"NBP PLN -> "+CountryCurrency.getCurrency(
+                                 CountryCurrency.getCurrencyFromCountry(MainFrame.country.getText())
+                )
                 );
             }
         });
@@ -27,10 +30,11 @@ public class GuiComponents {
         return field;
     }
     public static JTextField getCityTextField(){
-        JTextField field = new JTextField("Budapest");
+        JTextField field = new JTextField("Warsaw");
 
         field.setSize(150,30);
         field.setPreferredSize(new Dimension(150,30));
+        field.setToolTipText("City");
 
         field.addActionListener(new ActionListener() {
             @Override
@@ -51,14 +55,19 @@ public class GuiComponents {
 
         field.setSize(150,30);
         field.setPreferredSize(new Dimension(150,30));
+        field.setToolTipText("Currency Code");
 
         field.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new InfoFrame(
-                        ExchangeRate.callExcghangeRate(
-                                MainFrame.currency.getText())
-                        , "Exchange rate for "+MainFrame.currency.getText()
+                        ExchangeRate.getExchangeRateFromResponse(
+                                ExchangeRate.callExcghangeRate(MainFrame.currency.getText()),MainFrame.currency.getText())
+                        , "Exchange rate: "+ CountryCurrency.getCurrency(
+                                CountryCurrency.getCurrencyFromCountry(
+                                        MainFrame.country.getText()
+                                )
+                )+" -> "+MainFrame.currency.getText()
                 );
             }
         });
@@ -67,6 +76,7 @@ public class GuiComponents {
 
     public static JButton getWebButton(){
         JButton button = new JButton("Wiki City");
+        button.setToolTipText("getWebButton");
         button.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {

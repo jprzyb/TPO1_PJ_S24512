@@ -28,7 +28,6 @@ public class Futil {
                             try (BufferedReader reader = Files.newBufferedReader(file, Charset.forName("Cp1250"))) {
                                 String line;
                                 while ((line = reader.readLine()) != null) {
-/**/                                System.out.println(line);
                                     writer.write(line);
                                     writer.newLine();
                                 }

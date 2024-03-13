@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Currency;
 
 public class ExchangeRate {
 
@@ -48,8 +47,16 @@ public class ExchangeRate {
 
         for(String e : s){
             if(e.contains(currency)){
-                result = e.replace("\"quotes\":{\"", "").replace("}","").replace(currency,"").replace("\"","").
-                replace(":","").replace(CountryCurrency.getCurrency(CountryCurrency.getCurrencyFromCountry(Service.getCountry())), "");
+                try{
+                    result = e.replace("\"quotes\":{\"", "").replace("}","").replace(currency,"").replace("\"","").
+                            replace(":","").replace(CountryCurrency.getCurrency(CountryCurrency.getCurrencyFromCountry(MainFrame.country.getText())), "");
+                    System.out.print(Service.debug ? "Couldnt find MainFrame.country.getText().\n" : "");
+                }
+                catch (Exception exception){
+
+                    result = e.replace("\"quotes\":{\"", "").replace("}","").replace(currency,"").replace("\"","").
+                            replace(":","").replace(CountryCurrency.getCurrency(CountryCurrency.getCurrencyFromCountry(Service.getCountry())), "");
+                }
             }
         }
         if (result.equals("source")){

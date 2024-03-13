@@ -18,11 +18,11 @@ public class CountryCurrency {
         } catch (Exception e) {
             System.err.println("File read exception: " + e.getMessage());
         }
-        return "Country not found";
+        return "N/A";
     }
     public static String getCurrency(String line){
-        String result = line.split(" ")[0].split("\t")[0].trim();
-        System.out.print(Service.debug ? "Currency in " + line + ": " + result + "\n" : "");
+        String result = line.trim().substring(0,3);
+        System.out.print(Service.debug ? "Currency in \"" + line + "\": " + result + "\n" : "");
         return result;
     }
 }

@@ -50,12 +50,12 @@ public class ExchangeRate {
                 try{
                     result = e.replace("\"quotes\":{\"", "").replace("}","").replace(currency,"").replace("\"","").
                             replace(":","").replace(CountryCurrency.getCurrency(CountryCurrency.getCurrencyFromCountry(MainFrame.country.getText())), "");
-                    System.out.print(Service.debug ? "Couldnt find MainFrame.country.getText().\n" : "");
                 }
                 catch (Exception exception){
-
                     result = e.replace("\"quotes\":{\"", "").replace("}","").replace(currency,"").replace("\"","").
-                            replace(":","").replace(CountryCurrency.getCurrency(CountryCurrency.getCurrencyFromCountry(Service.getCountry())), "");
+                            replace(":","").
+                            replace(CountryCurrency.getCurrency(CountryCurrency.getCurrencyFromCountry(Service.getCountry())), "");
+                    System.out.print(Service.debug ? "Couldnt find MainFrame.country.getText().\n" : "");
                 }
             }
         }
